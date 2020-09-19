@@ -34,20 +34,6 @@ class Integrator():
         return acc
 
     def do_timestep(self, bodies):
-        ## # Kick
-        ## for body in bodies:
-        ##     a = self.calc_acceleration(bodies, body)
-        ##     body.velocity = body.velocity + 0.5*self.timestep*a
-
-        ## # Drift
-        ## for body in bodies:
-        ##     body.position = body.position + self.timestep*body.velocity
-
-        ## # Kick
-        ## for body in bodies:
-        ##     a = self.calc_acceleration(bodies, body)
-        ##     body.velocity = body.velocity + 0.5*self.timestep*a
-
         dt = self.timestep
 
         # Drift
@@ -85,11 +71,12 @@ class Orbit():
     def __init__(self,
                  semi_major=1,
                  eccentricity=0,
-                 mass1=1, mass2=0,
+                 mass_ratio=0,
                  n_sample=100,
                  substeps=10):
-        mtot = mass1 + mass2
-        a = semi_major*(mtot/mass1)**1
+        # Units: mass in Solar mass,
+        mtot = 1.0 + mass_ratio
+        a = mtot #semi_major*mtot
         e = eccentricity
 
         p = a*(1 - e*e)
@@ -97,14 +84,14 @@ class Orbit():
         r = a*(1 - e)
         v = np.sqrt(mtot/p)*(1 + e)
 
-        self.star_pos = [np.asarray([-mass2*r/mtot, 0.0, 0.0])]
-        self.star_vel = [np.asarray([0.0, -mass2*v/mtot, 0.0])]
+        self.star_pos = [np.asarray([-mass_ratio*r/mtot, 0.0, 0.0])]
+        self.star_vel = [np.asarray([0.0, -mass_ratio*v/mtot, 0.0])]
 
-        self.plan_pos = [np.asarray([mass1*r/mtot, 0.0, 0.0])]
-        self.plan_vel = [np.asarray([0.0, mass1*v/mtot, 0.0])]
+        self.plan_pos = [np.asarray([r/mtot, 0.0, 0.0])]
+        self.plan_vel = [np.asarray([0.0, v/mtot, 0.0])]
 
-        self.star = Body(mass1, self.star_pos[0], self.star_vel[0])
-        self.plan = Body(mass2, self.plan_pos[0], self.plan_vel[0])
+        self.star = Body(1.0, self.star_pos[0], self.star_vel[0])
+        self.plan = Body(mass_ratio, self.plan_pos[0], self.plan_vel[0])
 
         period = 2.0*np.pi*np.sqrt(a*a*a/mtot)
 
@@ -121,3 +108,17 @@ class Orbit():
 
             self.plan_pos.append(self.plan.position)
             self.plan_vel.append(self.plan.velocity)
+
+        # Internal units: a=1, Omega=1
+
+        # Time in years
+        self.time = 0.5*self.time*np.sqrt(semi_major**3/mtot)/np.pi
+
+        # Position in AU
+        self.star_pos = np.asarray(self.star_pos)*semi_major
+        self.plan_pos = np.asarray(self.plan_pos)*semi_major
+
+        # Velocity in AU/yr
+        fac = 2*np.pi/np.sqrt(semi_major/mtot)
+        self.star_vel = np.asarray(self.star_vel)*fac
+        self.plan_vel = np.asarray(self.plan_vel)*fac

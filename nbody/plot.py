@@ -29,26 +29,30 @@ class Anim():
         self.xp = np.asarray(orb.plan_pos)[:,0]
         self.yp = np.asarray(orb.plan_pos)[:,1]
 
-    def show(self):
-        fig = plt.figure(figsize=(6,6))
-        ax = plt.gca()
-        ax.axis('equal')
+    def show(self, fig, ax, plot_p, plot_s):
+        self.linep = plot_p
+        self.lines = plot_s
 
-        #self.line, = ax.plot(np.concatenate((self.xp, self.xs)),
-        #                     np.concatenate((self.yp, self.ys)),
-        #                     marker='o', ms=20,
-        #                     ls='None')
-        self.linep, = ax.plot(self.xp, self.yp,
-                              marker='o', ms=20, color='green',
-                              ls='None')
-        ax.set_xlabel(r'$x$', fontsize=20)
-        ax.set_ylabel(r'$y$', fontsize=20)
+        self.linep.set_data(self.xp, self.yp)
+        self.lines.set_data(self.xs, self.ys)
+        ax.relim()
+        ax.autoscale()
 
-        self.lines, = ax.plot(self.xs, self.ys,
-                              marker='$\star$', ms=20, color='orange',
-                              ls='None')
+        #fig = plt.figure(figsize=(6,6))
+        #ax = plt.gca()
+        #ax.axis('equal')
 
-        plt.tight_layout()
+        #self.linep, = ax.plot(self.xp, self.yp,
+        #                      marker='o', ms=20, color='green',
+        #                      ls='None')
+        #ax.set_xlabel(r'$x$', fontsize=20)
+        #ax.set_ylabel(r'$y$', fontsize=20)
+
+        #self.lines, = ax.plot(self.xs, self.ys,
+        #                      marker='$\star$', ms=20, color='orange',
+        #                      ls='None')
+
+        #plt.tight_layout()
 
         self.anim = animation.FuncAnimation(fig, self.animate,
                                             init_func = self.init,
@@ -56,7 +60,7 @@ class Anim():
                                             repeat=True,
                                             interval=20, blit=True)
 
-        plt.close('all')
+        #plt.close('all')
         return HTML(self.anim.to_jshtml())
         #return self.anim
 
