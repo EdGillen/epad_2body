@@ -56,7 +56,7 @@ class Anim():
                                             repeat=True,
                                             interval=20, blit=True)
 
-        plt.close(fig)
+        plt.close('all')
         return HTML(self.anim.to_jshtml())
         #return self.anim
 
