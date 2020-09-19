@@ -53,7 +53,7 @@ python-dateutil==2.8.1    # via jupyter-client, matplotlib
 pyzmq==19.0.2             # via jupyter-client, notebook
 send2trash==1.5.0         # via notebook
 six==1.15.0               # via argon2-cffi, bleach, cycler, jsonschema, packaging, python-dateutil
-terminado==0.9.0          # via notebook
+#terminado==0.9.0          # via notebook
 testpath==0.4.4           # via nbconvert
 tornado==6.0.4            # via ipykernel, jupyter-client, notebook, terminado
 traitlets==5.0.4          # via ipykernel, ipython, ipywidgets, jupyter-client, jupyter-core, nbclient, nbconvert, nbformat, notebook
