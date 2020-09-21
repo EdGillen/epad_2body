@@ -58,6 +58,7 @@ class Integrator():
         for body in bodies:
             body.position = body.position + self.c[2]*dt*body.velocity
 
+
         # Kick
         for body in bodies:
             a = self.calc_acceleration(bodies, body)
