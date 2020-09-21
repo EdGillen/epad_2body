@@ -38,21 +38,55 @@ class Anim():
         ax.relim()
         ax.autoscale()
 
-        #fig = plt.figure(figsize=(6,6))
-        #ax = plt.gca()
-        #ax.axis('equal')
+        self.anim = animation.FuncAnimation(fig, self.animate,
+                                            init_func = self.init,
+                                            frames = len(self.xp),
+                                            repeat=True,
+                                            interval=20, blit=True)
 
-        #self.linep, = ax.plot(self.xp, self.yp,
-        #                      marker='o', ms=20, color='green',
-        #                      ls='None')
-        #ax.set_xlabel(r'$x$', fontsize=20)
-        #ax.set_ylabel(r'$y$', fontsize=20)
+        return HTML(self.anim.to_jshtml())
 
-        #self.lines, = ax.plot(self.xs, self.ys,
-        #                      marker='$\star$', ms=20, color='orange',
-        #                      ls='None')
+    def init(self):
+        self.linep.set_data([self.xp[0]],[self.yp[0]])
+        self.lines.set_data([self.xs[0]],[self.ys[0]])
+        return (self.linep,)
 
-        #plt.tight_layout()
+    def animate(self, i):
+        self.linep.set_data([self.xp[i]],[self.yp[i]])
+        self.lines.set_data([self.xs[i]],[self.ys[i]])
+        return (self.linep,)
+
+class AnimKep2():
+    def __init__(self, orb):
+        self.xs = np.asarray(orb.star_pos)[:,0]
+        self.ys = np.asarray(orb.star_pos)[:,1]
+
+        self.xp = np.asarray(orb.plan_pos)[:,0]
+        self.yp = np.asarray(orb.plan_pos)[:,1]
+
+    def show(self, fig, ax, coll, plot_p, plot_s, ndiff=10):
+        self.coll = coll
+        self.n = ndiff
+
+        self.linep = plot_p
+        self.lines = plot_s
+
+        xp = np.append(self.xp, self.xp[0])
+        yp = np.append(self.yp, self.yp[0])
+
+        self.linep.set_data(xp, yp)
+        self.lines.set_data(self.xs[0], self.ys[0])
+
+        xsel = np.ravel(np.append(self.xp[0:ndiff],
+                                  np.asarray([self.xs[0], self.xp[0]])))
+        ysel = np.ravel(np.append(self.yp[0:ndiff],
+                                  np.asarray([self.ys[0], self.yp[0]])))
+
+        xy = np.transpose(np.asarray([xsel, ysel]))
+
+        self.coll.set_xy(xy)
+        ax.relim()
+        ax.autoscale()
 
         self.anim = animation.FuncAnimation(fig, self.animate,
                                             init_func = self.init,
@@ -60,20 +94,26 @@ class Anim():
                                             repeat=True,
                                             interval=20, blit=True)
 
-        #plt.close('all')
         return HTML(self.anim.to_jshtml())
-        #return self.anim
 
     def init(self):
-        #self.line.set_data([self.xp[0], self.xs[0]],
-        #                   [self.yp[0], self.ys[0]])
-        self.linep.set_data([self.xp[0]],[self.yp[0]])
-        self.lines.set_data([self.xs[0]],[self.ys[0]])
-        return (self.linep,)
+        xsel = np.ravel(np.append(self.xp[0:self.n],
+                                  np.asarray([self.xs[0], self.xp[0]])))
+        ysel = np.ravel(np.append(self.yp[0:self.n],
+                                  np.asarray([self.ys[0], self.yp[0]])))
+        xy = np.transpose(np.asarray([xsel, ysel]))
+
+        self.coll.set_xy(xy)
+        return (self.coll,)
 
     def animate(self, i):
-        #self.line.set_data([self.xp[i], self.xs[i]],
-        #                   [self.yp[i], self.ys[i]])
-        self.linep.set_data([self.xp[i]],[self.yp[i]])
-        self.lines.set_data([self.xs[i]],[self.ys[i]])
-        return (self.linep,)
+        sel = np.arange(i, i+self.n) % len(self.xp)
+
+        xsel = np.ravel(np.append(self.xp[sel],
+                                  np.asarray([self.xs[0], self.xp[i]])))
+        ysel = np.ravel(np.append(self.yp[sel],
+                                  np.asarray([self.ys[0], self.yp[i]])))
+
+        xy = np.transpose(np.asarray([xsel, ysel]))
+        self.coll.set_xy(xy)
+        return (self.coll,)
