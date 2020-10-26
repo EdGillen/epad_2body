@@ -11,3 +11,4 @@ matplotlib==3.3.2         # via -r requirements.in
 numpy==1.19.2             # via -r requirements.in, matplotlib
 lightkurve==1.11.3
 pynpoint==0.8.3
+opencv-python==4.4.0.44
