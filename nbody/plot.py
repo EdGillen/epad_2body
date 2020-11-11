@@ -170,3 +170,53 @@ class AnimKep3():
         self.linep2.set_data([self.xp2[i]],[self.yp2[i]])
         self.lines.set_data([self.xs[i]],[self.ys[i]])
         return (self.linep2,)
+
+class AnimRadVel():
+    def __init__(self, orb):
+        self.xs = np.asarray(orb.star_pos)[:,0]
+        self.ys = np.asarray(orb.star_pos)[:,1]
+
+        self.xp = np.asarray(orb.plan_pos)[:,0]
+        self.yp = np.asarray(orb.plan_pos)[:,1]
+
+        self.time = orb.time
+        self.radvel = np.asarray(orb.star_vel)[:,0]*4740.57172
+
+    def show(self, fig, ax1, ax2, plot_p, plot_pline, plot_s,
+             plot_radvel, plot_radvel_sym):
+        self.linep = plot_p
+        self.linep2 = plot_pline
+        self.lines = plot_s
+        self.line_radvel = plot_radvel
+        self.symb_radvel = plot_radvel_sym
+
+        self.linep.set_data(self.xp, self.yp)
+        self.linep2.set_data(self.xp, self.yp)
+        self.lines.set_data(self.xs, self.ys)
+        ax1.relim()
+        ax1.autoscale()
+
+        self.line_radvel.set_data(self.time, self.radvel)
+        self.symb_radvel.set_data(self.time, self.radvel)
+        ax2.relim()
+        ax2.autoscale()
+
+        self.anim = animation.FuncAnimation(fig, self.animate,
+                                            init_func = self.init,
+                                            frames = len(self.xp),
+                                            repeat=True,
+                                            interval=20, blit=True)
+
+        return HTML(self.anim.to_jshtml())
+
+    def init(self):
+        self.linep.set_data([self.xp[0]],[self.yp[0]])
+        self.lines.set_data([self.xs[0]],[self.ys[0]])
+        self.symb_radvel.set_data([self.time[0]], [self.radvel[0]])
+        return (self.linep,)
+
+    def animate(self, i):
+        self.linep.set_data([self.xp[i]],[self.yp[i]])
+        self.lines.set_data([self.xs[i]],[self.ys[i]])
+        self.symb_radvel.set_data([self.time[i]], [self.radvel[i]])
+        return (self.linep,)
