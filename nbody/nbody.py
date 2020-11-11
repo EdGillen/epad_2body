@@ -74,7 +74,8 @@ class Orbit():
                  eccentricity=0,
                  mass_ratio=0,
                  n_sample=100,
-                 substeps=10):
+                 substeps=10,
+                 longitude_pericentre=0):
         # Units: mass in Solar mass,
         mtot = 1.0 + mass_ratio
         a = mtot #semi_major*mtot
@@ -90,6 +91,29 @@ class Orbit():
 
         self.plan_pos = [np.asarray([r/mtot, 0.0, 0.0])]
         self.plan_vel = [np.asarray([0.0, v/mtot, 0.0])]
+
+        #print(self.star_pos[0])
+
+        # Rotate pericentre
+        c = np.cos(longitude_pericentre)
+        s = np.sin(longitude_pericentre)
+
+        xs = c*self.star_pos[0][0] - s*self.star_pos[0][1]
+        ys = s*self.star_pos[0][0] + c*self.star_pos[0][1]
+        vxs = c*self.star_vel[0][0] - s*self.star_vel[0][1]
+        vys = s*self.star_vel[0][0] + c*self.star_vel[0][1]
+        xp = c*self.plan_pos[0][0] - s*self.plan_pos[0][1]
+        yp = s*self.plan_pos[0][0] + c*self.plan_pos[0][1]
+        vxp = c*self.plan_vel[0][0] - s*self.plan_vel[0][1]
+        vyp = s*self.plan_vel[0][0] + c*self.plan_vel[0][1]
+
+        self.star_pos = [np.asarray([xs, ys, 0.0])]
+        self.star_vel = [np.asarray([vxs, vys, 0.0])]
+        self.plan_pos = [np.asarray([xp, yp, 0.0])]
+        self.plan_vel = [np.asarray([vxp, vyp, 0.0])]
+
+        #print(self.star_pos[0])
+
 
         self.star = Body(1.0, self.star_pos[0], self.star_vel[0])
         self.plan = Body(mass_ratio, self.plan_pos[0], self.plan_vel[0])
