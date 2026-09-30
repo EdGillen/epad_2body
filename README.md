@@ -12,7 +12,8 @@ Notes:
 - Starting Binder can take a minute or two (longer the first time after the repository changes).
 - The app view runs the whole notebook before it appears, and each slider move recomputes the orbit,
   so allow a few seconds.
-- In the code view the notebook opens without any plots: run it with **Run > Run All Cells**.
+- In the code view the notebook opens without any plots: click inside the notebook, then choose
+  **Run > Run All Cells**.
 - Binder sessions are temporary: they stop after about 10 minutes of inactivity and any changes you
   make in the code view are not saved. Download a notebook (File > Download) to keep your edits.
 
