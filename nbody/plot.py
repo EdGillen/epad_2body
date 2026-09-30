@@ -75,7 +75,7 @@ class AnimKep2():
         yp = np.append(self.yp, self.yp[0])
 
         self.linep.set_data(xp, yp)
-        self.lines.set_data(self.xs[0], self.ys[0])
+        self.lines.set_data(self.xs[:1], self.ys[:1])
 
         xsel = np.ravel(np.append(self.xp[0:ndiff],
                                   np.asarray([self.xs[0], self.xp[0]])))
@@ -146,7 +146,7 @@ class AnimKep3():
 
         self.linep1.set_data(xp1, yp1)
         self.linep2.set_data(xp2, yp2)
-        self.lines.set_data(self.xs[0], self.ys[0])
+        self.lines.set_data(self.xs[:1], self.ys[:1])
 
         ax.relim()
         ax.autoscale()
