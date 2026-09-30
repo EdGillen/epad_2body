@@ -1,7 +1,7 @@
 # EPAD: the two-body problem
 
 Interactive notebooks on Kepler's laws and the radial velocity method. Click a badge to open a
-notebook in your browser via [Binder](https://mybinder.org); nothing needs to be installed.
+notebook in your browser via [Binder](https://mybinder.org); you do not need to install any software.
 
 | Notebook | App: text, sliders and plots (code hidden) | Code: read, run and edit in JupyterLab |
 |---|---|---|
@@ -11,7 +11,7 @@ notebook in your browser via [Binder](https://mybinder.org); nothing needs to be
 Notes:
 - Starting Binder can take a minute or two (longer the first time after the repository changes).
 - The app view runs the whole notebook before it appears, and each slider move recomputes the orbit,
-  so allow a few seconds.
+  so please allow a few seconds.
 - In the code view the notebook opens without any plots: click inside the notebook, then choose
   **Run > Run All Cells**.
 - Binder sessions are temporary: they stop after about 10 minutes of inactivity and any changes you
