@@ -7,7 +7,7 @@ notebook in your browser via [Binder](https://mybinder.org); you do not need to 
 |---|---|---|
 | Kepler's laws | [![Kepler's laws: app](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/EdGillen/epad_2body/HEAD?urlpath=voila/render/kepler.ipynb) | [![Kepler's laws: code](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/EdGillen/epad_2body/HEAD?urlpath=lab/tree/kepler.ipynb) |
 | Radial velocity method | [![Radial velocity: app](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/EdGillen/epad_2body/HEAD?urlpath=voila/render/radvel.ipynb) | [![Radial velocity: code](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/EdGillen/epad_2body/HEAD?urlpath=lab/tree/radvel.ipynb) |
-| Radial velocity: star and planet | [![Star and planet: app](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/EdGillen/epad_2body/HEAD?urlpath=voila/render/radvel_star_planet.ipynb) | [![Star and planet: code](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/EdGillen/epad_2body/HEAD?urlpath=lab/tree/radvel_star_planet.ipynb) |
+| Radial velocity method (star and planet) | [![Star and planet: app](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/EdGillen/epad_2body/HEAD?urlpath=voila/render/radvel_star_planet.ipynb) | [![Star and planet: code](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/EdGillen/epad_2body/HEAD?urlpath=lab/tree/radvel_star_planet.ipynb) |
 
 Notes:
 - Starting Binder can take a minute or two (longer the first time after the repository changes).
